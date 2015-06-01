@@ -1,0 +1,28 @@
+import urllib
+
+class AdvancedUserRecipe1432745411(BasicNewsRecipe):
+    title          = u'Acta Analytica'
+    springer_id    = '12136'
+    cover_url = 'https://images.springer.com/sgw/journals/medium/' + springer_id + '.jpg'
+    springer_feed  = 'http://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=' + springer_id + '&channel-name=' + urllib.quote_plus(title)
+    oldest_article = 30
+    max_articles_per_feed = 15
+    publication_type = 'magazine'
+    auto_cleanup = False
+    no_stylesheets = True
+    encoding = 'utf8'
+    remove_tags_before = dict(attrs={'class':'FulltextWrapper'})
+    remove_tags_after = dict(attrs={'class':'FulltextWrapper'})
+    extra_css = 'span {display:inline; } \
+                .EmphasisTypeItalic {font-style: italic;} \
+                .MainTitleSection, .AuthorGroup, .ArticleHistory {text-align:center;} \
+                .Heading { margin: 1em 0px; font-size: large; font-weight: bold } \
+                .Para { margin: 1em 0px; } \
+                .Citation { padding-left: 1em; text-indent: -1em } \
+                .Occurrences { font-size: small; } \
+                .FootnoteNumber { float:left; }'
+
+    feeds          = [(u'Recent Articles', springer_feed)]
+    
+    def print_version(self, url):
+       return url.replace('.com/','.com/article/') + '/fulltext.html'

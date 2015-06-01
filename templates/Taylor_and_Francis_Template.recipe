@@ -1,0 +1,25 @@
+# This is a template for journals hosted by Taylor and Francis.
+# To use, replace the title and tandf_id variables as appropriate. 
+# The tandf_id can be found in the journal's url. For example, for
+# the Australasian Journal of Philosophy, the url is
+# 
+#     http://www.tandfonline.com/toc/rajp20/current
+#
+# and the tandf_id is 'rajp20'.
+#
+
+class BasicUserRecipe1432754104(AutomaticNewsRecipe):
+    title          = u'Australasian Journal of Philosophy'
+    tandf_id       = u'rajp20'
+    rss_url        = u'http://www.tandfonline.com/action/showFeed?ui=0&mi=hlmbkr&ai=10z&jc=' + tandf_id + '&type=etoc&feed=rss'
+    oldest_article = 90 
+    max_articles_per_feed = 15 
+    auto_cleanup = False
+    keep_only_tags = [dict(id=['fulltextPanel', 'overview'])]
+    remove_tags = [dict(id=['open-crossmark', 'alertMe'])]
+    no_stylesheets = True
+    extra_css = '.paragraph {padding-bottom: 1em}'
+
+    feeds          = [(u'Recent Articles', rss_url)]
+
+

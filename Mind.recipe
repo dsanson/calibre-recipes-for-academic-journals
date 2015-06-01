@@ -1,0 +1,62 @@
+class BasicUserRecipe1432754104(AutomaticNewsRecipe):
+    title          = u'Mind'
+    oldest_article = 60 
+    max_articles_per_feed = 20 
+    rss_url        = u'http://' + title.lower() + '.oxfordjournals.org/rss/current.xml' 
+    auto_cleanup = False
+    keep_only_tags = [dict(id="content-block")]
+    remove_tags = [dict(attrs={'class':'section-nav'}),
+                   dict(name='mml:math'),
+                   dict(attrs={'class':'mathjax-code'})]
+    no_stylesheets = True
+    extra_css = 'q {display:block; margin-left: 2em; margin-top: 1em} \
+                 .contributors ol li {list-style: none;} \
+                 .contributors { text-align: center}'  
+
+    feeds          = [(u'Current Issue', rss_url)]
+
+    def print_version(self, url):
+        url = url.replace('/cgi/', '/')
+        url = url.replace('/short/', '/')
+        return re.sub('\?.*','.full',url)
+
+
+# http://analysis.oxfordjournals.org/cgi/content/short/75/2/191?rss=1
+# http://analysis.oxfordjournals.org/content/75/2/191.short?rss=1
+# http://analysis.oxfordjournals.org/content/75/2/191.full
+
+
+# http://analysis.oxfordjournals.org/cgi/content/short/anv033v1?rss=1
+# http://analysis.oxfordjournals.org/content/early/2015/05/21/analys.anv033.full
+
+# Remove articles in feeds based on a string in the article title or url.
+    #
+    # Code logic written by: Starson17 - posted in: "Recipes - Re-usable code"
+    # thread, in post with title: "Remove articles from feed", see url:
+    # http://www.mobileread.com/forums/showpost.php?p=1165462&postcount=6
+    # Many thanks and all credit to Starson17.
+    #
+    # Starson17's code has obviously been altered to suite my requirements.
+    def parse_feeds(self):
+
+        # Call parent's method.
+        feeds = BasicNewsRecipe.parse_feeds(self)
+
+        # Loop through all feeds.
+        for feed in feeds:
+
+            # Loop through all articles in feed.
+            for article in feed.articles[:]:
+
+                # Match key words and remove article if there's a match.
+                if 'Front Cover' in article.title:
+                    feed.articles.remove(article)
+                elif 'Subscriptions' in article.title:
+                    feed.articles.remove(article)
+                elif 'Title Page' in article.title:
+                    feed.articles.remove(article)
+                elif 'Editorial Board' in article.title:
+                    feed.articles.remove(article)
+                elif 'Back Cover' in article.title:
+                    feed.articles.remove(article)
+        return feeds

@@ -1,0 +1,14 @@
+class BasicUserRecipe1432754104(AutomaticNewsRecipe):
+    title          = u'History and Philosophy of Logic'
+    rss_url        = u'http://www.tandfonline.com/action/showFeed?ui=0&mi=hlmbkr&ai=16u&jc=thpl20&type=etoc&feed=rss'
+    oldest_article = 90 
+    max_articles_per_feed = 15 
+    auto_cleanup = False
+    keep_only_tags = [dict(id=['fulltextPanel', 'overview'])]
+    remove_tags = [dict(id=['open-crossmark', 'alertMe'])]
+    no_stylesheets = True
+    extra_css = '.paragraph {padding-bottom: 1em}'
+
+    feeds          = [(u'Recent Articles', rss_url)]
+
+

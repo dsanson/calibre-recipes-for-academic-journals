@@ -1,0 +1,25 @@
+class BasicUserRecipe1432754104(AutomaticNewsRecipe):
+    title          = u'Proceedings of the Aristotelian Society Supplement'
+    journal_issn   = '1467-8349'
+    rss_url        = u'http://onlinelibrary.wiley.com/rss/journal/10.1111/(ISSN)' + journal_issn
+    oldest_article = 360 
+    max_articles_per_feed = 15 
+    auto_cleanup = False
+    keep_only_tags = [dict(id=['fulltext', 'articleTitle', 'articleMeta'])]
+    no_stylesheets = True
+    extra_css = '#articleTitle, #articleMeta {text-align: center} \
+                 #footnotes li {list-style: none} \
+                 .bullet {display: block; float: left; padding-left: 1em}'
+
+    feeds          = [(u'Recent Articles', rss_url)]
+
+    def print_version(self, url):
+        url = url.replace('%2F', '/')
+        url = url.replace('/resolve/doi?DOI=', '/doi/') + '/full'
+        print(url)
+        return url
+
+# http://onlinelibrary.wiley.com/resolve/doi?DOI=10.1111%2Frati.12100
+# http://onlinelibrary.wiley.com/doi/10.1111/rati.12100/full
+
+
